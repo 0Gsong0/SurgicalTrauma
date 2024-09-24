@@ -29,7 +29,7 @@ end
 Hook.Add("characterCreated", "ST.BloodAndImmunity", function(createdCharacter)
     Timer.Wait(function()
         if (createdCharacter.IsHuman and not createdCharacter.IsDead) then
-            apply(createdCharacter,"bloodpressure")
+            apply(createdCharacter,"ST_bloodpressure")
             apply(createdCharacter,"immunity")
             SetAffliction(createdCharacter, "temperature", random(35,37))
             local randomBloodType = getRandomBloodType()

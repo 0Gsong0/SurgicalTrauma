@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <infotexts language="Simplified Chinese" nowhitespace="true" translatedname="中文(简体)">
-	<afflictionname.ST_Kill></afflictionname.ST_Kill>
-	<afflictiondescription.ST_Kill></afflictiondescription.ST_Kill>
 	<afflictioncauseofdeath.ST_Kill>与世长辞</afflictioncauseofdeath.ST_Kill>
 	<afflictioncauseofdeathself.ST_Kill>与世长辞啦</afflictioncauseofdeathself.ST_Kill>
+	<afflictioncauseofdeath.ST_Cerebralfarction>脑梗塞而死</afflictioncauseofdeath.ST_Cerebralfarction>
+	<afflictioncauseofdeathself.ST_Cerebralfarction>你因为脑梗塞而死</afflictioncauseofdeathself.ST_Cerebralfarction>
 </infotexts>

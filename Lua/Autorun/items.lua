@@ -367,15 +367,15 @@ ST.Items.Sutures = function (item, usingCharacter, targetCharacter, limb)
 
     if HasAfflictionLimb(targetCharacter,"drilledbones",limbtype,0.1) then return end
     if HasAfflictionLimb(targetCharacter,"bonecut",limbtype,0.1) and not HasAfflictionLimb(targetCharacter,"TearingLimbs",limbtype,0.1) then
-        if limbtype == LimbType.RightArm then AddAfflictionLimb(targetCharacter,"sra_amputation",LimbType.RightArm,100) SpawnItemInventory(targetCharacter,"rarm")end
-        if limbtype == LimbType.LeftArm then AddAfflictionLimb(targetCharacter,"sla_amputation",LimbType.LeftArm,100) SpawnItemInventory(targetCharacter,"larm")end
-        if limbtype == LimbType.RightLeg then AddAfflictionLimb(targetCharacter,"srl_amputation",LimbType.RightLeg,100) SpawnItemInventory(targetCharacter,"rleg")end
-        if limbtype == LimbType.LeftLeg then AddAfflictionLimb(targetCharacter,"sll_amputation",LimbType.LeftLeg,100) SpawnItemInventory(targetCharacter,"lleg")end
+        if limbtype == LimbType.RightArm then AddAfflictionLimb(targetCharacter,"ST_sra_amputation",LimbType.RightArm,100) SpawnItemInventory(targetCharacter,"rarm")end
+        if limbtype == LimbType.LeftArm then AddAfflictionLimb(targetCharacter,"ST_sla_amputation",LimbType.LeftArm,100) SpawnItemInventory(targetCharacter,"larm")end
+        if limbtype == LimbType.RightLeg then AddAfflictionLimb(targetCharacter,"ST_srl_amputation",LimbType.RightLeg,100) SpawnItemInventory(targetCharacter,"rleg")end
+        if limbtype == LimbType.LeftLeg then AddAfflictionLimb(targetCharacter,"ST_sll_amputation",LimbType.LeftLeg,100) SpawnItemInventory(targetCharacter,"lleg")end
     elseif HasAfflictionLimb(targetCharacter,"bonecut",limbtype,0.1) and HasAfflictionLimb(targetCharacter,"TearingLimbs",limbtype,0.5) then
-        if limbtype == LimbType.RightArm then AddAfflictionLimb(targetCharacter,"sra_amputation",LimbType.RightArm,100) SpawnItemInventory(targetCharacter,"RottenMeat") end
-        if limbtype == LimbType.LeftArm then AddAfflictionLimb(targetCharacter,"sla_amputation",LimbType.LeftArm,100) SpawnItemInventory(targetCharacter,"RottenMeat") end
-        if limbtype == LimbType.RightLeg then AddAfflictionLimb(targetCharacter,"srl_amputation",LimbType.RightLeg,100) SpawnItemInventory(targetCharacter,"RottenMeat") end
-        if limbtype == LimbType.LeftLeg then AddAfflictionLimb(targetCharacter,"sll_amputation",LimbType.LeftLeg,100) SpawnItemInventory(targetCharacter,"RottenMeat") end
+        if limbtype == LimbType.RightArm then AddAfflictionLimb(targetCharacter,"ST_sra_amputation",LimbType.RightArm,100) SpawnItemInventory(targetCharacter,"RottenMeat") end
+        if limbtype == LimbType.LeftArm then AddAfflictionLimb(targetCharacter,"ST_sla_amputation",LimbType.LeftArm,100) SpawnItemInventory(targetCharacter,"RottenMeat") end
+        if limbtype == LimbType.RightLeg then AddAfflictionLimb(targetCharacter,"ST_srl_amputation",LimbType.RightLeg,100) SpawnItemInventory(targetCharacter,"RottenMeat") end
+        if limbtype == LimbType.LeftLeg then AddAfflictionLimb(targetCharacter,"ST_sll_amputation",LimbType.LeftLeg,100) SpawnItemInventory(targetCharacter,"RottenMeat") end
     end
     local cansuture = ST.SurgicalStatus
     for val in cansuture do

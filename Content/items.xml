@@ -1201,7 +1201,7 @@
         <ReduceAffliction identifier="lacerations" amount="20" />
         <ReduceAffliction identifier="gunshotwound" amount="20" />
         <ReduceAffliction identifier="bitewounds" amount="20" />
-        <ReduceAffliction identifier="bloodloss" amount="5" />
+        <ReduceAffliction identifier="bloodloss" amount="10" />
         <ReduceAffliction identifier="bleeding" amount="35" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">

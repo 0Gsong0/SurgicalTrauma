@@ -5,6 +5,9 @@
       <StatusEffect target="Character">
         <!--ReduceAffliction type="pain" amount="100" /-->
       </StatusEffect>
+		<!--StatusEffect target="Character">
+			<TriggerAnimation Type="Walk" filename="Humanhappywalk" priority="7" ExpectedSpecies="Human" />
+		</StatusEffect-->
     </Effect>
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="2,1" sheetelementsize="128,128" origin="0,0" />
   </anaesthesia>
@@ -50,7 +53,7 @@
       </StatusEffect>
       <StatusEffect target="Character" comparison="and">
         <Conditional anaesthesia="lte 0.5" />
-        <!--Affliction identifier="traumaticshock" amount="0.5" /-->
+        <Affliction identifier="ST_traumaticshock" amount="0.5" />
       </StatusEffect>
     </Effect>
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="0,7" sheetelementsize="128,128" origin="0,0" />
@@ -62,8 +65,8 @@
   <retractedskin name="皮肤牵引" identifier="retractedskin" description="皮肤被牵引开了，你可以清楚看到里面的组织" healableinmedicalclinic="false" limbspecific="true" type="retractedskin" isbuff="true" maxstrength="100" showinhealthscannerthreshold="700" showiconthreshold="1" iconcolors="84,100,100,255;84,211,211,255">
     <Effect minstrength="0" maxstrength="100" strengthchange="10">
       <StatusEffect target="Character" comparison="and">
-        <!--Conditional table="eq 0" sym_unconsciousness="lte 0.1" /-->
-        <!--Affliction identifier="traumaticshock" amount="2" /-->
+        <Conditional unconsciousness="lte 0.1" />
+        <Affliction identifier="ST_traumaticshock" amount="2" />
       </StatusEffect>
     </Effect>
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="2,7" sheetelementsize="128,128" origin="0,0" />
@@ -115,8 +118,8 @@
   <bonecut name="骨锯开" identifier="bonecut" description="骨头被整齐的锯开了" healableinmedicalclinic="true" type="gaze" isbuff="true" limbspecific="true" maxstrength="100" showinhealthscannerthreshold="700" showiconthreshold="1" iconcolors="84,100,100,255;84,211,211,255">
     <Effect minstrength="0" maxstrength="100" strengthchange="20">
       <StatusEffect target="Character" comparison="and">
-        <Conditional table="eq 0" sym_unconsciousness="lte 0.1" />
-        <!--Affliction identifier="traumaticshock" amount="1.5" /-->
+        <Conditional unconsciousness="lte 0.1" />
+        <Affliction identifier="ST_traumaticshock" amount="1.5" />
       </StatusEffect>
     </Effect>
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="5,7" sheetelementsize="128,128" origin="0,0" />
@@ -124,8 +127,8 @@
   <drilledbones name="骨头钻孔" identifier="drilledbones" description="骨头被开了一个洞，已经准备好进行下一步手术了" healableinmedicalclinic="false" isbuff="true" limbspecific="true" maxstrength="100" showinhealthscannerthreshold="700" showiconthreshold="1" iconcolors="84,100,100,255;84,211,211,255">
     <Effect minstrength="0" maxstrength="100" strengthchange="30">
       <StatusEffect target="Character" comparison="and">
-        <Conditional table="eq 0" sym_unconsciousness="lte 0.1" />
-        <!--Affliction identifier="traumaticshock" amount="1.5" /-->
+        <Conditional unconsciousness="lte 0.1" />
+        <Affliction identifier="ST_traumaticshock" amount="1.5" />
       </StatusEffect>
     </Effect>
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="4,7" sheetelementsize="128,128" origin="0,0" />
@@ -156,8 +159,16 @@
       </StatusEffect>
     </Effect>
   </Acidosis>
+	<!--呼吸停止，癫痫，失去意识-->
+	<OpioidPoisoning name="阿片中毒" identifier="opioidpoisoning" description="阿片类药物中毒的情况很少见，只发生在滥用阿片类药物的时候" type="debuff" causeofdeathdescription="Died of opiate poisoning" selfcauseofdeathdescription="You have died of opiate poisoning." limbspecific="false" indicatorlimb="Head" showiconthreshold="10" showinhealthscannerthreshold="5" karmachangeonapplied="-1" maxstrength="100" affectmachines="false" healcostmultiplier="1.25">
+		<Description textidentifier="afflictiondescription.opiateoverdose.self" target="Self" />
+		<Description textidentifier="afflictiondescription.opiateoverdose" target="OtherCharacter" />
+		<!--TODO-->
+		<Effect minstrength="0" maxstrength="50" strengthchange="-0.5" minchromaticaberration="0.0" maxchromaticaberration="1.0" minspeedmultiplier="0.8" maxspeedmultiplier="0.6"></Effect>
+		<icon texture="Content/UI/MainIconsAtlas.png" sourcerect="640,768,128,128" color="230,255,0,255" origin="0,0" />
+	</OpioidPoisoning>
   <!--主动脉破裂-->
-  <ST_arterialcut_M name="主动脉破裂" identifier="ST_arterialcut_M" description="主动脉大破裂，正在疯狂喷血" healableinmedicalclinic="false" targets="human" type="arterialcut" limbspecific="false" indicatorlimb="Torso" showiconthreshold="200" showinhealthscannerthreshold="1" maxstrength="100">
+  <ST_arterialcut_M name="主动脉破裂" identifier="ST_arterialcut_M" description="主动脉大破裂，正在疯狂喷血" healableinmedicalclinic="false" targets="human" type="arterialcut" limbspecific="false" indicatorlimb="Torso" showiconthreshold="1" showinhealthscannerthreshold="1" maxstrength="100">
     <Effect minstrength="0" maxstrength="80" strengthchange="3" />
     <Effect minstrength="80" maxstrength="100" strengthchange="3.5">
       <StatusEffect target="Character">
@@ -171,8 +182,8 @@
       </StatusEffect>
       <StatusEffect target="Character" disabledeltatime="true" stackable="false" delay="1" checkconditionalalways="false">
         <Conditional ST_balloonedaorta="lte 1" />
-        <!--Affliction identifier="internalbleeding" strength="8" /-->
-        <Affliction identifier="bloodloss" strength="4" />
+        <Affliction identifier="ST_internalbleeding" strength="1" />
+        <Affliction identifier="bloodloss" strength="1.5" />
       </StatusEffect>
     </PeriodicEffect>
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,3" sheetelementsize="128,128" origin="0,0" />
@@ -183,7 +194,7 @@
     <Effect minstrength="80" maxstrength="100" strengthchange="2">
       <StatusEffect target="Character">
         <Conditional ST_arterialcut_M_b="gte 85" />
-        <!--Affliction identifier="internalbleeding" strength="8" /-->
+        <Affliction identifier="ST_internalbleeding" strength="0.2" />
       </StatusEffect>
     </Effect>
     <PeriodicEffect mininterval="1" maxinterval="3">
@@ -192,14 +203,21 @@
       </StatusEffect>
       <StatusEffect target="Character" disabledeltatime="true" stackable="false" delay="1" checkconditionalalways="false">
         <Conditional ST_balloonedaorta="lte 1" />
-        <!--Affliction identifier="internalbleeding" strength="8" /-->
-        <Affliction identifier="bloodloss" strength="4" />
+        <Affliction identifier="ST_internalbleeding" strength="0.2" />
+        <Affliction identifier="bloodloss" strength="1" />
       </StatusEffect>
     </PeriodicEffect>
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,3" sheetelementsize="128,128" origin="0,0" />
   </ST_arterialcut_M>
+	<Affliction name="内出血" identifier="ST_internalbleeding" healableinmedicalclinic="false" targets="human" description="icon不可见" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="False" indicatorlimb="Torso" showinhealthscannerthreshold="1" showiconthreshold="300" maxstrength="100">
+		<icon texture="Content/UI/CommandUIAtlas.png" sourcerect="896,896,128,128" origin="0,0" />
+		<Effect minstrength="0" maxstrength="100" strengthchange="-0.5" minvitalitydecrease="0" maxvitalitydecrease="1">
+			<StatusEffect target="Character">
+			</StatusEffect>
+		</Effect>
+	</Affliction>
   <!--副动脉破裂-->
-  <ST_arterialcut name="副动脉破裂" identifier="ST_arterialcut_F" description="副动脉破裂" healableinmedicalclinic="false" targets="human" type="arterialcut" limbspecific="true" showiconthreshold="10" showinhealthscannerthreshold="1" maxstrength="100">
+  <ST_arterialcut name="副动脉破裂" identifier="ST_arterialcut_F" description="副动脉破裂" healableinmedicalclinic="false" targets="human" type="arterialcut" limbspecific="true" showiconthreshold="1" showinhealthscannerthreshold="1" maxstrength="100">
     <Effect minstrength="0" maxstrength="80" strengthchange="3" />
     <Effect minstrength="80" maxstrength="100" strengthchange="2">
       <StatusEffect target="Character">
@@ -212,8 +230,8 @@
       </StatusEffect>
       <StatusEffect target="Character" disabledeltatime="true" stackable="false" delay="1" checkconditionalalways="false">
         <Conditional ST_balloonedaorta="lte 1" />
-        <!--Affliction identifier="internalbleeding" strength="4" /-->
-        <Affliction identifier="bloodloss" strength="2" />
+        <Affliction identifier="ST_internalbleeding" strength="0.5" />
+        <Affliction identifier="bloodloss" strength="1" />
       </StatusEffect>
     </PeriodicEffect>
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,3" sheetelementsize="128,128" origin="0,0" />
@@ -235,20 +253,12 @@
       </StatusEffect>
       <StatusEffect target="Character" disabledeltatime="true" stackable="false" delay="1" checkconditionalalways="false">
         <Conditional ST_arteriesclamp="lte 1" />
-        <!--Affliction identifier="internalbleeding" strength="4" /-->
-        <Affliction identifier="bloodloss" strength="0.7" />
+        <Affliction identifier="ST_internalbleeding" strength="0.5" />
+        <Affliction identifier="bloodloss" strength="0.5" />
       </StatusEffect>
     </PeriodicEffect>
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="9,5" sheetelementsize="128,128" origin="0,0" />
   </Nerverupture>
-  <!--呼吸停止，癫痫，失去意识-->
-  <OpioidPoisoning name="阿片中毒" identifier="opioidpoisoning" description="阿片类药物中毒的情况很少见，只发生在滥用阿片类药物的时候" type="debuff" causeofdeathdescription="Died of opiate poisoning" selfcauseofdeathdescription="You have died of opiate poisoning." limbspecific="false" indicatorlimb="Head" showiconthreshold="10" showinhealthscannerthreshold="5" karmachangeonapplied="-1" maxstrength="100" affectmachines="false" healcostmultiplier="1.25">
-    <Description textidentifier="afflictiondescription.opiateoverdose.self" target="Self" />
-    <Description textidentifier="afflictiondescription.opiateoverdose" target="OtherCharacter" />
-    <!--TODO-->
-    <Effect minstrength="0" maxstrength="50" strengthchange="-0.5" minchromaticaberration="0.0" maxchromaticaberration="1.0" minspeedmultiplier="0.8" maxspeedmultiplier="0.6"></Effect>
-    <icon texture="Content/UI/MainIconsAtlas.png" sourcerect="640,768,128,128" color="230,255,0,255" origin="0,0" />
-  </OpioidPoisoning>
   <!--计算性buff-->
   <Affliction name="创伤性休克" identifier="ST_traumaticshock" description="患者因为伤势晕倒了！快叫医生啊！" healableinmedicalclinic="false" targets="human" type="gaze" isbuff="false" limbspecific="false" indicatorlimb="Head" activationthreshold="0" showinhealthscannerthreshold="5" showiconthreshold="5" maxstrength="100" iconcolors="200,0,0,255;200,0,0,255">
     <Effect minstrength="0" maxstrength="100" strengthchange="-0.1" minafflictionoverlayalphamultiplier="0.7" maxafflictionoverlayalphamultiplier="1" minresistance="1" maxresistance="100" minscreendistort="0" maxscreendistort="100" minscreenblur="0" maxscreenblur="100" minradialdistort="0" maxradialdistort="100" minchromaticaberration="0" maxchromaticaberration="100">
@@ -268,7 +278,7 @@
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" origin="0,0" />
     <Effect minstrength="0" maxstrength="1" strengthchange="-0.9" minspeedmultiplier="0.8" maxspeedmultiplier="0.6">
       <StatusEffect target="Character">
-		 <ReduceAffliction identifier="ST_bloodpressure" amount="0.1" />
+		 <ReduceAffliction identifier="ST_bloodpressure" amount="-0.1" />
       </StatusEffect>
     </Effect>
   </LowersBlooding>
@@ -284,25 +294,23 @@
 	<!--造成重要脏器的慢性缺血，甚至导致心绞痛、心肌梗死、脑血栓形成等疾病-->
   <bloodpressure name="血压" identifier="ST_bloodpressure" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="0" showiconthreshold="300" maxstrength="200">
         <Effect minstrength="0" maxstrength="5" strengthchange="10" />
-		<Effect minstrength="5" maxstrength="90" strengthchange="0.5" />
+		<Effect minstrength="5" maxstrength="90" strengthchange="1" />
 		<Effect minstrength="90" maxstrength="100" strengthchange="0" />
 		<Effect minstrength="101" maxstrength="200" strengthchange="-0.5" />
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
   </bloodpressure>
 	<!--极易招致细菌、病毒、真菌等感染-->
   <immunity name="免疫力" identifier="immunity" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="0" showiconthreshold="300" maxstrength="100">
-    <!--Effect minstrength="0" maxstrength="5" strengthchange="10" />
-		<Effect minstrength="5" maxstrength="90" strengthchange="0" />
-		<Effect minstrength="90" maxstrength="100" strengthchange="1" />
-		<Effect minstrength="101" maxstrength="200" strengthchange="-0.5" /-->
+        <Effect minstrength="0" maxstrength="5" strengthchange="10" />
+		<Effect minstrength="5" maxstrength="100" strengthchange="0.5" />
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
   </immunity>
-	<!--容易导致各类心脏疾病，肝脏损伤，脑缺血、脑梗塞，肾脏危害，免疫系统的危害-->
   <temperature name="体温" identifier="temperature" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="0" showiconthreshold="300" maxstrength="50">
-    <!--Effect minstrength="0" maxstrength="5" strengthchange="10" />
-		<Effect minstrength="5" maxstrength="90" strengthchange="0" />
-		<Effect minstrength="90" maxstrength="99" strengthchange="1" />
-		<Effect minstrength="101" maxstrength="200" strengthchange="-0.5" /-->
+        <Effect minstrength="0" maxstrength="5" strengthchange="10" />
+		<Effect minstrength="5" maxstrength="30" strengthchange="0.1" />
+		<Effect minstrength="30" maxstrength="36" strengthchange="0.05" />
+	    <Effect minstrength="36" maxstrength="40" strengthchange="0" />
+		<Effect minstrength="40" maxstrength="50" strengthchange="-0.5" />
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
   </temperature>
   <BLOODTYPE name="O-" identifier="o-" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="30" showiconthreshold="300" maxstrength="1">
@@ -332,38 +340,344 @@
   <!--截肢-->
   <TearingLimbs name="肢体撕裂" identifier="TearingLimbs" description="这个部位的肉体被撕裂" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" limbspecific="true" showinhealthscannerthreshold="0" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="5,9" sheetelementsize="128,128" origin="0,0" />
+	  <Effect minstrength="0" maxstrength="90" strengthchange="-0.3" />
+	  <Effect minstrength="90" maxstrength="100" strengthchange="0.5" />
   </TearingLimbs>
-  <Amputation name="" identifier="sra_amputation" description="" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="RightArm" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
+  <Amputation name="肢体截肢" identifier="ST_sra_amputation" description="右手不见了" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="RightArm" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="0,6" sheetelementsize="128,128" origin="0,0" />
   </Amputation>
-  <Amputation name="" identifier="sla_amputation" description="" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="LeftArm" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
+  <Amputation name="肢体截肢" identifier="ST_sla_amputation" description="左手不见了" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="LeftArm" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="1,6" sheetelementsize="128,128" origin="0,0" />
   </Amputation>
-  <Amputation name="" identifier="srl_amputation" description="" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="RightLeg" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
+  <Amputation name="肢体截肢" identifier="ST_srl_amputation" description="右腿不见了,也许你该换个姿势走路？" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="RightLeg" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="2,6" sheetelementsize="128,128" origin="0,0" />
     <Effect minstrength="0" maxstrength="100" minvitalitydecrease="0" maxvitalitydecrease="10" minscreendistort="0" maxscreendistort="0.1" minspeedmultiplier="0.2" maxspeedmultiplier="0.5"></Effect>
   </Amputation>
-  <Amputation name="" identifier="sll_amputation" description="" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="LeftLeg" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
+  <Amputation name="肢体截肢" identifier="ST_sll_amputation" description="左腿不见了，也许你该换个姿势走路？" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="LeftLeg" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
     <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,6" sheetelementsize="128,128" origin="0,0" />
     <Effect minstrength="0" maxstrength="100" minvitalitydecrease="0" maxvitalitydecrease="10" minscreendistort="0" maxscreendistort="0.1" minspeedmultiplier="0.2" maxspeedmultiplier="0.5"></Effect>
   </Amputation>
+	<Affliction name="创伤性截肢" identifier="tra_amputation" description="右手的大部分组织被直接撕碎" healableinmedicalclinic="false" targets="human" isbuff="true" type="t_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="RightArm" showiconthreshold="0.25" maxstrength="0.5" iconcolors="200,0,0,255;200,0,0,255">
+		<icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="0,6" sheetelementsize="128,128" origin="0,0" />
+	</Affliction>
+	<Affliction name="创伤性截肢" identifier="tla_amputation" description="左手的大部分组织被直接撕碎" healableinmedicalclinic="false" targets="human" isbuff="true" type="t_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="LeftArm" showiconthreshold="0.25" maxstrength="0.5" iconcolors="200,0,0,255;200,0,0,255">
+		<icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="1,6" sheetelementsize="128,128" origin="0,0" />
+	</Affliction>
+	<Affliction name="创伤性截肢" identifier="trl_amputation" description="右腿的大部分组织被直接撕碎" healableinmedicalclinic="false" targets="human" isbuff="true" type="t_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="RightLeg" showiconthreshold="0.25" maxstrength="0.5" iconcolors="200,0,0,255;200,0,0,255">
+		<icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="2,6" sheetelementsize="128,128" origin="0,0" />
+		<Effect minstrength="0" maxstrength="0.5"
+		minvitalitydecrease="0"
+		maxvitalitydecrease="10"
+		minscreendistort="0"
+		maxscreendistort="0.1"
+		minspeedmultiplier="0.4"
+		maxspeedmultiplier="0.5">
+		</Effect>
+	</Affliction>
+	<Affliction name="创伤性截肢" identifier="tll_amputation" description="左腿的大部分组织被直接撕碎" healableinmedicalclinic="false" targets="human" isbuff="true" type="t_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="LeftLeg" showiconthreshold="0.25" maxstrength="0.5" iconcolors="200,0,0,255;200,0,0,255">
+		<icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,6" sheetelementsize="128,128" origin="0,0" />
+		<Effect minstrength="0" maxstrength="0.5"
+		minvitalitydecrease="0"
+		maxvitalitydecrease="10"
+		minscreendistort="0"
+		maxscreendistort="0.1"
+		minspeedmultiplier="0.4"
+		maxspeedmultiplier="0.5">
+		</Effect>
+	</Affliction>
 	<!--杂症-->
 	<Affliction name="皮肤苍白" identifier="ST_paleskin" description="冷白皮这不就有了吗？" healableinmedicalclinic="false" type="gaze" isbuff="false" limbspecific="false" indicatorlimb="Torso" showiconthreshold="1" showinhealthscannerthreshold="100" maxstrength="2" iconcolors="200,195,195,255;200,195,195,255">
-		<Effect minstrength="0" maxstrength="2" maxvitalitydecrease="0" minbodytint="255,255,255,0" maxbodytint="255,255,255,255" />
+		<Effect minstrength="0" maxstrength="2" strengthchange="-0.1" maxvitalitydecrease="0" minbodytint="255,255,255,0" maxbodytint="255,255,255,255" />
 		<icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" color="255,255,255,255" origin="0,0" />
 	</Affliction>
 	<Affliction name="换气过度" identifier="ST_hyperventilation" description="喘息过于频繁" healableinmedicalclinic="false" type="gaze" isbuff="false" targets="human" limbspecific="false" indicatorlimb="Torso" showiconthreshold="1" showinhealthscannerthreshold="200" maxstrength="2" iconcolors="255,90,0,255;255,90,0,255">
 		<icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="4,0" sheetelementsize="128,128" origin="0,0" />
+		<Effect minstrength="0" maxstrength="2" strengthchange="-0.1"/>
 	</Affliction>
 	<Affliction name="心绞痛" identifier="angina" description="我重伤倒地！" healableinmedicalclinic="false" type="gaze" isbuff="false" targets="human" limbspecific="false" indicatorlimb="Torso" showiconthreshold="1" showinhealthscannerthreshold="200" maxstrength="2" iconcolors="255,90,0,255;255,90,0,255">
 		<icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="4,0" sheetelementsize="128,128" origin="0,0" />
+		<Effect minstrength="0" maxstrength="2" strengthchange="-0.1"/>
 	</Affliction>
 	<Affliction name="头疼" identifier="ST_headache" type="pain" isbuff="false" healableinmedicalclinic="false" description="谁给我开颅了吗？" limbspecific="false" indicatorlimb="Head" showiconthreshold="1" showinhealthscannerthreshold="100" maxstrength="2" grainburst="3" iconcolors="255,90,0,255;255,90,0,255">
-		<Effect minstrength="0" maxstrength="2" minscreendistort="0.0" maxscreendistort="0.5" minradialdistort="0.0" maxradialdistort="0.5" mingrainstrength="0.0" maxgrainstrength="0.5" />
-		<icon texture="%ModDir%/Images/AfflictionIcons2.png" sheetindex="1,0" sheetelementsize="128,128" origin="0,0" />
+		<Effect minstrength="0" maxstrength="2" strengthchange="-0.1" minscreendistort="0.0" maxscreendistort="0.5" minradialdistort="0.0" maxradialdistort="0.5" mingrainstrength="0.0" maxgrainstrength="0.5" />
+		<icon texture="%ModDir%/Content/Images/AfflictionIcons2.png" sheetindex="1,0" sheetelementsize="128,128" origin="0,0" />
 	</Affliction>
 	<Affliction name="头晕" identifier="ST_blurredvision" description="看不清路了..." healableinmedicalclinic="false" type="gaze" isbuff="false" limbspecific="false" indicatorlimb="Head" showiconthreshold="1" showinhealthscannerthreshold="100" maxstrength="2" iconcolors="255,90,0,255;255,90,0,255">
-		<Effect minstrength="0" maxstrength="2" minscreenblur="0.0" maxscreenblur="1.5" mingrainstrength="0.1" maxgrainstrength="1.5" minscreendistort="0.5" maxvitalitydecrease="2" />
-		<icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="3,1" sheetelementsize="128,128" origin="0,0" />
+		<Effect minstrength="0" maxstrength="2" strengthchange="-0.1" minscreenblur="0.0" maxscreenblur="1.5" mingrainstrength="0.1" maxgrainstrength="1.5" minscreendistort="0.5" maxvitalitydecrease="2" />
+		<icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,1" sheetelementsize="128,128" origin="0,0" />
 	</Affliction>
+	<Affliction name="皮下创伤" identifier="ST_Subcutaneoustrauma" description="伤口淤青发紫了...别碰！" healableinmedicalclinic="false" type="gaze" isbuff="false" limbspecific="true" showiconthreshold="1" showinhealthscannerthreshold="100" maxstrength="100" iconcolors="255,90,0,255;255,90,0,255">
+		<Effect minstrength="0" maxstrength="100" strengthchange="-0.25" maxvitalitydecrease="1" />
+		<icon texture="%ModDir%/Content/Images/AfflictionIcons2.png" sheetindex="6,1" sheetelementsize="128,128" origin="0,0" />
+	</Affliction>
+	<!--造成梗塞-->
+	<Affliction name="脑缺血" identifier="ST_Cerebralchemia" description="" healableinmedicalclinic="false" type="gaze" isbuff="false" limbspecific="false" indicatorlimb="Head" showiconthreshold="1" showinhealthscannerthreshold="100" maxstrength="100" iconcolors="255,100,0,255;255,0,0,255">
+		<Effect minstrength="0" maxstrength="100" strengthchange="-0.1" minscreenblur="0.0" maxscreenblur="1.5" mingrainstrength="0.1" maxgrainstrength="1.5" minscreendistort="0.5" maxvitalitydecrease="2" >
+			<StatusEffect target="Character">
+				<Conditional ST_Cerebralchemia="gte 40" />
+				<Affliction identifier="ST_Cerebralfarction" amount="0.8" />
+				<Affliction identifier="oxygenlow" amount="1" />
+			</StatusEffect>
+		</Effect>
+		<icon texture="%ModDir%/Content/Images/AfflictionIcons2.png" sheetindex="4,1" sheetelementsize="128,128" origin="0,0" />
+	</Affliction>
+	<!--死-->
+	<Affliction name="脑梗塞" identifier="ST_Cerebralfarction" description="" healableinmedicalclinic="false" type="gaze" isbuff="false" limbspecific="false" indicatorlimb="Head" showiconthreshold="1" showinhealthscannerthreshold="100" maxstrength="100" iconcolors="255,90,0,255;255,90,0,255">
+		<Effect minstrength="0" maxstrength="100" strengthchange="-0.05" minvitalitydecrease="0" maxvitalitydecrease="150" minscreenblur="0.0" maxscreenblur="1.5" mingrainstrength="0.1" maxgrainstrength="1.5" minscreendistort="0.5" />
+		<icon texture="%ModDir%/Content/Images/AfflictionIcons2.png" sheetindex="5,1" sheetelementsize="128,128" origin="0,0" />
+	</Affliction>
+	<!--容易导致各类心脏疾病，肝脏损伤，脑缺血、脑梗塞，肾脏危害，免疫系统的危害-->
+	<Affliction name="低温症" identifier="Hypothermia" description="患者体温很低，千万不要把他扔水里" healableinmedicalclinic="false" targets="human" type="bodytemperature" isbuff="false" limbspecific="false" showinhealthscannerthreshold="1" showiconthreshold="1" maxstrength="100" iconcolors="0,200,255,255;0,200,255,255">
+		<icon texture="%ModDir%/Content/Images/AfflictionIcons2.png" sheetindex="3,1" sheetelementsize="128,128" origin="0.5,0.5" color="0,200,255,255"/>
+		<Effect minstrength="0" maxstrength="40" strengthchange="-1" >
+			<StatusEffect type="InWater" target="character">
+				<Affliction identifier="Hypothermia" amount="1" />
+			</StatusEffect>
+		</Effect>
+		<Effect minstrength="40" maxstrength="60" strengthchange="-0.15" >
+			<StatusEffect type="InWater" target="character">
+				<Affliction identifier="Hypothermia" amount="0.2" />
+			</StatusEffect>
+		</Effect>
+		<Effect minstrength="60" maxstrength="100" strengthchange="-0.1" >
+		</Effect>
+	</Affliction>
+	<!--*********************************************************************************************************************************************************************-->
+	<Override>
+		<InternalDamage name="钝器伤" identifier="blunttrauma" description="" type="damage" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="true" maxstrength="200" damageoverlayalpha="0.5" WeaponsSkillGain="1.0">
+			<Description textidentifier="afflictiondescription.blunttrauma.low" minstrength="0" maxstrength="40" />
+			<Description textidentifier="afflictiondescription.blunttrauma" minstrength="40" maxstrength="200" />
+			<Effect minstrength="0" maxstrength="200" multiplybymaxvitality="true" minvitalitydecrease="0" maxvitalitydecrease="1" >
+				<StatusEffect target="limb">
+					<Conditional blunttrauma="gte 30" />
+					<Affliction identifier="ST_Subcutaneoustrauma" strength="1" />
+				</StatusEffect>
+			</Effect>
+			<icon texture="Content/UI/MainIconsAtlas.png" sourcerect="768,896,128,128" color="195,136,60,255" origin="0,0"/>
+		</InternalDamage>
+		<InternalDamage
+          name="撕裂伤"
+          identifier="lacerations"
+          description=""
+          type="damage"
+          causeofdeathdescription=""
+          selfcauseofdeathdescription=""
+          limbspecific="true"
+          maxstrength="200"
+          damageoverlayalpha="2"
+          WeaponsSkillGain="1.0">
+			<Description
+			 textidentifier="afflictiondescription.lacerations.low"
+			 minstrength="0"
+			 maxstrength="40"/>
+			<Description
+			  textidentifier="afflictiondescription.lacerations"
+			  minstrength="40"
+			  maxstrength="200"/>
+			<Effect minstrength="0" maxstrength="200" multiplybymaxvitality="true"
+			  minvitalitydecrease="0"
+			  maxvitalitydecrease="1">
+				<StatusEffect target="limb">
+					<Conditional lacerations="gte 100" />
+					<Affliction identifier="ST_arterialcut_F" strength="3" />
+				</StatusEffect>
+				<StatusEffect target="limb">
+					<Affliction identifier="bleeding" strength="0.5" />
+				</StatusEffect>
+			</Effect>
+			<icon texture="Content/UI/MainIconsAtlas.png" sourcerect="896,896,128,128" color="195,136,60,255" origin="0,0"/>
+		</InternalDamage>
+		<InternalDamage
+          name="咬伤"
+          identifier="bitewounds"
+          description=""
+          type="damage"
+          causeofdeathdescription="Mauled to death"
+          selfcauseofdeathdescription="You have been mauled to death."
+          limbspecific="true"
+          maxstrength="200"
+          damageoverlayalpha="2">
+			<Description
+			  textidentifier="afflictiondescription.bitewounds.low"
+			  minstrength="0"
+			  maxstrength="40"/>
+			<Description
+			  textidentifier="afflictiondescription.bitewounds"
+			  minstrength="40"
+			  maxstrength="200"/>
+			<Effect minstrength="0" maxstrength="200" multiplybymaxvitality="true"
+			  minvitalitydecrease="0"
+			  maxvitalitydecrease="1">
+				<StatusEffect target="limb">
+					<Conditional bitewounds="gte 100" />
+					<Affliction identifier="ST_arterialcut_F" strength="3" />
+				</StatusEffect>
+				<StatusEffect target="limb">
+					<Affliction identifier="bleeding" strength="0.5" />
+				</StatusEffect>
+			</Effect>
+			<icon texture="Content/UI/MainIconsAtlas.png" sourcerect="0,512,128,128" color="195,136,60,255" origin="0,0"/>
+		</InternalDamage>
+		<InternalDamage
+          name="枪伤"
+          identifier="gunshotwound"
+          description="The entry site is a small, dark, bruised hole oozing a little blood. The exit wound however is a large ragged mess of exposed tissue and pouring blood."
+          type="damage"
+          causeofdeathdescription="Shot to death"
+          selfcauseofdeathdescription="You have died of gunshot wounds."
+          limbspecific="true"
+          maxstrength="200"
+          karmachangeonapplied="-1"
+          damageoverlayalpha="2"
+          WeaponsSkillGain="1.0">
+			<Description
+			  textidentifier="afflictiondescription.gunshotwound.low"
+			  minstrength="0"
+			  maxstrength="40"/>
+			<Description
+			  textidentifier="afflictiondescription.gunshotwound"
+			  minstrength="40"
+			  maxstrength="200"/>
+			<Effect minstrength="0" maxstrength="200" multiplybymaxvitality="true"
+			  minvitalitydecrease="0"
+			  maxvitalitydecrease="0.5"
+			  dialogflag="GunshotWound">
+				<StatusEffect target="limb">
+					<Conditional gunshotwound="gte 100" />
+					<Affliction identifier="ST_arterialcut_F" strength="3" />
+				</StatusEffect>
+			</Effect>
+			<icon texture="Content/UI/MainIconsAtlas.png" sourcerect="256,768,128,128" color="195,60,60,255" origin="0,0"/>
+		</InternalDamage>
+		<Bleeding
+		  identifier="外出血"
+		  type="bleeding"
+		  causeofdeathdescription="Bled to death"
+		  selfcauseofdeathdescription="You have bled to death."
+		  limbspecific="true"
+		  maxstrength="100"
+		  karmachangeonapplied="-1"
+		  damageoverlayalpha="0.6"
+		  healcostmultiplier="2.5"
+		  WeaponsSkillGain="1.0">
+			<Description
+			  textidentifier="afflictiondescription.bleeding.low"
+			  minstrength="0"
+			  maxstrength="20"/>
+			<Description
+			  textidentifier="afflictiondescription.bleeding"
+			  minstrength="20"
+			  maxstrength="60"/>
+			<Description
+			  textidentifier="afflictiondescription.bleeding.high"
+			  minstrength="60"
+			  maxstrength="100"/>
+			<!-- Strength 0-20 -->
+			<Effect minstrength="0" maxstrength="20"
+			  minvitalitydecrease="0"
+			  maxvitalitydecrease="0.5"
+			  strengthchange="-0.1" />
+			<!-- Strength 20-40 -->
+			<Effect minstrength="20" maxstrength="40"
+			  minvitalitydecrease="0.5"
+			  maxvitalitydecrease="1"
+			  strengthchange="-0.1">
+				<StatusEffect target="Limb" interval="5" disabledeltatime="true" ConditionalComparison="And">
+					<Conditional IsHuman="true"/>
+					<Conditional ST_bloodpressure="gte 10"/>
+					<Affliction identifier="infection" amount="5" probability="0.025" />
+				</StatusEffect>
+			</Effect>
+			<!-- Strength 40-60 -->
+			<Effect minstrength="40" maxstrength="60"
+			  minvitalitydecrease="1"
+			  maxvitalitydecrease="1.5"
+			  strengthchange="-0.1">
+				<StatusEffect target="Limb" interval="5" disabledeltatime="true" ConditionalComparison="And">
+					<Conditional IsHuman="true"/>
+					<Conditional ST_bloodpressure="gte 10"/>
+					<Affliction identifier="infection" amount="5" probability="0.05" />
+				</StatusEffect>
+			</Effect>
+			<!-- Strength 60-100 -->
+			<Effect minstrength="60" maxstrength="100"
+			  minvitalitydecrease="1.5"
+			  maxvitalitydecrease="2"
+			  strengthchange="-0.1">
+				<StatusEffect target="Limb" interval="5" disabledeltatime="true" ConditionalComparison="And">
+					<Conditional IsHuman="true"/>
+					<Conditional ST_bloodpressure="gte 10"/>
+					<Affliction identifier="infection" amount="5" probability="0.08" />
+				</StatusEffect>
+			</Effect>
+			<icon texture="Content/UI/MainIconsAtlas.png" sourcerect="896,640,128,128" color="139,60,42,255" origin="0,0"/>
+		</Bleeding>
+		<Bloodloss
+		  identifier="bloodloss"
+		  type="bloodloss"
+		  causeofdeathdescription="Bled to death"
+		  selfcauseofdeathdescription="You have bled to death."
+		  limbspecific="false"
+		  indicatorlimb="Torso"
+		  activationthreshold="5"
+		  karmachangeonapplied="-0.1"
+		  maxstrength="100"
+		  affectmachines="false"
+		  healcostmultiplier="1.5">
+			<Description
+			  textidentifier="afflictiondescription.bloodloss.low.self"
+			  target="Self"
+			  minstrength="0"
+			  maxstrength="30"/>
+			<Description
+			  textidentifier="afflictiondescription.bloodloss.high.self"
+			  target="Self"
+			  minstrength="30"
+			  maxstrength="100"/>
+			<Description
+			  textidentifier="afflictiondescription.bloodloss.low"
+			  target="OtherCharacter"
+			  minstrength="0"
+			  maxstrength="30"/>
+			<Description
+			  textidentifier="afflictiondescription.bloodloss"
+			  target="OtherCharacter"
+			  minstrength="30"
+			  maxstrength="100"/>
+			<!-- no effects at this point -->
+			<Effect minstrength="0" maxstrength="5" strengthchange="-0.5" />
+			<Effect minstrength="5" maxstrength="45" multiplybymaxvitality="true"
+			  minvitalitydecrease="0"
+			  maxvitalitydecrease="0.5"
+			  strengthchange="-0.5"
+			  dialogflag="Bloodloss">
+				<StatusEffect target="Limb" interval="5" disabledeltatime="true" ConditionalComparison="And">
+					<Conditional IsHuman="true"/>
+					<Conditional ST_bloodpressure="gte 10"/>
+					<Affliction identifier="infection" amount="5" probability="0.08" />
+				</StatusEffect>
+			</Effect>
+			<Effect 
+			  minstrength="45" 
+			  maxstrength="100" 
+			  multiplybymaxvitality="true"
+			  minvitalitydecrease="0.5"
+			  maxvitalitydecrease="1"
+			  strengthchange="-0.4"
+			  dialogflag="Bloodloss"
+			  minscreenblur="0.0"
+			  maxscreenblur="6.0"
+			  minchromaticaberration="0.0"
+			  maxchromaticaberration="2.0"
+			  minbodytint="255,0,0,0"
+			  maxbodytint="255,0,0,150">
+			<StatusEffect target="Limb" interval="5" disabledeltatime="true" ConditionalComparison="And">
+				<Conditional IsHuman="true"/>
+				<Conditional ST_bloodpressure="gte 10"/>
+				<Affliction identifier="infection" amount="5" probability="0.08" />
+>			</StatusEffect>
+			</Effect>
+			<icon texture="Content/UI/MainIconsAtlas.png" sourcerect="0,768,128,128" color="139,60,42,255" origin="0,0"/>
+		</Bloodloss>
+	</Override>
 </Afflictions>

@@ -58,6 +58,11 @@ function GetAfflictionStrengthLimb(character,identifier,limbtype)
     if aff == nil then return 0 end
     return aff.strength
 end
+function GetAfflictionLimb(character,identifier)
+    local aff = character.CharacterHealth.GetAffliction(identifier)
+    local limb = character.CharacterHealth.GetAfflictionLimb(aff)
+    return limb
+end
 --skill
 function GetSkillLevel(character,skilltype)
     return character.GetSkillLevel(Identifier(skilltype))

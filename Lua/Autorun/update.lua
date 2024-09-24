@@ -5,8 +5,6 @@ ST.Deltatime = ST.UpdateInterval / 60
 ST.tickTasks = {}
 
 local limbtypes = {
-    LimbType.Torso,
-    LimbType.Head,
     LimbType.LeftArm,
     LimbType.RightArm,
     LimbType.LeftLeg,
@@ -78,9 +76,8 @@ end
 function ST.UpdateHuman(character)
     local charData = {character=character, afflictions={}, stats={}}
     --防止血压/体温丢失
-    if not HasAffliction(character,"bloodpressure",0.1) then AddAfflictionLimb(character,"bloodpressure",LimbType.Torso,2) end
+    if not HasAffliction(character,"ST_bloodpressure",0.1) then AddAfflictionLimb(character,"ST_bloodpressure",LimbType.Torso,2) end
     if not HasAffliction(character,"temperature",0.1) then AddAfflictionLimb(character,"temperature",LimbType.Torso,2) end
-    -- 更新非肢体特定的病症
     for identifier, data in pairs(ST.Afflictions) do
 
         if data.update then
@@ -101,23 +98,99 @@ function ST.UpdateMonster(character)
         SetAffliction(character,"bloodloss",0)
     end
 end
-
+function GetLimb(c,i)
+    local limb = GetAfflictionLimb(c,i)
+    if limb == nil then return end
+    limb = limb.type
+    return limb
+end
 ST.Afflictions = {
-    bloodpressure={ --血压
+    ST_bloodpressure={ --血压
         update=function(c,i)
             if GetAfflictionStrength(c,i) < 70 then AddAffliction(c,"oxygenlow",random(0.1,0.3)*(100-GetAfflictionStrength(c,i))) end
             --if GetAfflictionStrength(c,i) < 70-80 then 导致心绞痛、心肌梗死 end
-            if GetAfflictionStrength(c,i) < 60 then AddAffliction(c,"ST_paleskin",5) end
+            if GetAfflictionStrength(c,i) < 60 then 
+                AddAffliction(c,"ST_paleskin",5) 
+                AddAffliction(c,"ST_hyperventilation",5) 
+            end
+            if GetAfflictionStrength(c,i) < 50 then 
+                AddAffliction(c,"angina",5) 
+                AddAffliction(c,"ST_headache",5)
+                AddAffliction(c,"ST_blurredvision",5)
+                AddAffliction(c,"ST_Cerebralchemia",0.5)
+            end
+            local st = (GetAfflictionStrength(c,"bleeding")+GetAfflictionStrength(c,"bloodloss"))*0.4+GetAfflictionStrength(c,"ST_internalbleeding")*0.1
+            if GetAfflictionStrength(c,i) <=25 or st < 10 then return end
+            SetAffliction(c,i,st*-1)
         end
     },
-    bodytemperature={ --体温
+    temperature={ --体温
         update=function(c,i)
-        
+            if GetAfflictionStrength(c,i) < 34 then
+                AddAffliction(c,"Hypothermia",random(1,10))
+                if  GetAfflictionStrength(c,"immunity") >= 50 then
+                    AddAffliction(c,"immunity",random(-6,-1))
+                elseif GetAfflictionStrength(c,"immunity") >= 20 then
+                    AddAffliction(c,"immunity",random(-3,-1))
+                end
+            end
+        end
+    },
+    Hypothermia = { --低温症
+        update=function(c,i)
+            if GetAfflictionStrength(c,i) > 40 then
+                AddAffliction(c,"ST_paleskin",5)
+                --心脏疾病AddAffliction(c,"ST_paleskin",5)
+                --肝脏损伤AddAffliction(c,"ST_paleskin",5)
+                --肾脏损伤AddAffliction(c,"ST_paleskin",5)
+                AddAffliction(c,"ST_Cerebralchemia",random(0,10))
+                AddAffliction(c,"ST_Cerebralfarction",random(0,1))
+                if  GetAfflictionStrength(c,"immunity") >= 15 then
+                    AddAffliction(c,"immunity",random(-3,-1))
+                end
+            end
         end
     },
     immunity={ --免疫力
         update=function(c,i)
-            
+            affres = GetAfflictionStrength(c,i) * 0.01
         end
-    }
+    },
+    TearingLimbs = { --肢体撕裂
+        update=function(c,i)
+            local limb = GetLimb(c,i)
+            if limb == LimbType.Torso or LimbType.Head or nil then SetAfflictionLimb(c,i,LimbType.Torso,0) SetAfflictionLimb(c,i,LimbType.Head,0) end
+
+            if GetAfflictionStrengthLimb(c,i,LimbType.LeftArm) >= 99 then AddAfflictionLimb(c,"tla_amputation",LimbType.LeftArm,100) end
+            if GetAfflictionStrengthLimb(c,i,LimbType.RightArm) >= 99 then AddAfflictionLimb(c,"tra_amputation",LimbType.RightArm,100) end
+            if GetAfflictionStrengthLimb(c,i,LimbType.LeftLeg) >= 99 then AddAfflictionLimb(c,"tll_amputation",LimbType.LeftLeg,100) end
+            if GetAfflictionStrengthLimb(c,i,LimbType.RightLeg) >= 99 then AddAfflictionLimb(c,"trl_amputation",LimbType.RightLeg,100) end
+        end
+    },
+    --原版病症/拓展------------------------------------------------
+    blunttrauma = { --钝器伤
+        update=function(c,i)
+            local limb = GetAfflictionLimb(c,i)
+            if GetAfflictionStrengthLimb(c,i,LimbType.Torso) >= 60 and GetAfflictionStrength(c,i) >= 70 then 
+                AddAffliction(c,"ST_arterialcut_M",random(30,80)) 
+            end
+        end
+    },
+    gunshotwound = { --枪伤
+        update=function(c,i)
+            local limb = GetLimb(c,i)
+            if limb == nil then return end
+            if GetAfflictionStrengthLimb(c,i,limb) >= 50 then
+                AddAfflictionLimb(c,"TearingLimbs",limb,random(0,5))
+            end
+        end
+    },
+    ST_internalbleeding = { --内出血
+        update=function(c,i)
+            local bleeding = GetAfflictionStrength(c,"bloodloss")
+            if bleeding <= 10 then return end
+            now = GetAfflictionStrength(c,i)
+            SetAffliction(c,i,bleeding/2+now)
+        end
+    },
 }
