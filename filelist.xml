@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentpackage name="SurgicalTrauma - 外科创伤" modversion="0.0.9" corepackage="False" gameversion="1.5.9.2">
+  <Item file="%ModDir%/Content/items.xml" />
+  <Afflictions file="%ModDir%/Content/Afflictions.xml" />
+  <Text file="%ModDir%/Content/Text/chinese.xml" />
+  <Submarine file="%ModDir%/Content/ST测试地.sub" />
+</contentpackage>

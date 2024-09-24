@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Afflictions>
+  <anaesthesia name="麻醉" identifier="anaesthesia" indicatorlimb="Head" description="你感觉头昏眼花" healableinmedicalclinic="false" targets="human" type="resistance" isbuff="true" limbspecific="false" showiconthreshold="10" maxstrength="200">
+    <Effect minstrength="0" maxstrength="200" resistancefor="damage" minresistance="1" maxresistance="100" minscreendistort="0" maxscreendistort="100" minscreenblur="0" maxscreenblur="100" minradialdistort="0" maxradialdistort="100" minchromaticaberration="0" maxchromaticaberration="100" strengthchange="-0.3">
+      <StatusEffect target="Character">
+        <!--ReduceAffliction type="pain" amount="100" /-->
+      </StatusEffect>
+    </Effect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="2,1" sheetelementsize="128,128" origin="0,0" />
+  </anaesthesia>
+  <unconsciousness name="失去意识" identifier="unconsciousness" description="头有点晕，先睡会" healableinmedicalclinic="false" type="gaze" isbuff="false" limbspecific="false" indicatorlimb="Head" showiconthreshold="1" showinhealthscannerthreshold="100" maxstrength="2">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,2" sheetelementsize="128,128" origin="0,0" />
+    <Effect minstrength="0" maxstrength="2" strengthchange="-0.1">
+      <StatusEffect target="Character">
+        <Affliction identifier="stun" amount="1" />
+      </StatusEffect>
+    </Effect>
+  </unconsciousness>
+  <bandaged name="绷带包扎" identifier="bandaged" description="" healableinmedicalclinic="false" targets="human" limbspecific="true" maxstrength="100" type="resistance" showiconthreshold="0.1" showinhealthscannerthreshold="200" isbuff="true">
+    <Effect minstrength="0" maxstrength="100" />
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="0,4" sheetelementsize="128,128" origin="0,0" />
+  </bandaged>
+  <bonegrowth name="刺激骨生长" identifier="bonegrowth" description="" healableinmedicalclinic="false" targets="human" type="resistance" isbuff="true" limbspecific="true" showiconthreshold="1" showinhealthscannerthreshold="500" maxstrength="100">
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.5"></Effect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="2,4" sheetelementsize="128,128" origin="0,0" />
+  </bonegrowth>
+  <bonegrowth name="耐用骨生长" identifier="bonegrowth_B" description="你的伤害抗性暂时提高了，可以考虑把身上的骨头全换成这玩意" healableinmedicalclinic="false" targets="human" type="resistance" isbuff="true" limbspecific="true" showiconthreshold="1" showinhealthscannerthreshold="500" maxstrength="100" iconcolors="255,255,255,255;255,255,0,255">
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.1"></Effect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="2,4" sheetelementsize="128,128" origin="0,0" />
+  </bonegrowth>
+  <ointmented name="烧伤膏涂敷" identifier="ST_ointmented" description="表面覆盖着一层抗生素凝胶，保护并清洁伤口，让细菌无路可进" healableinmedicalclinic="false" targets="human" limbspecific="true" maxstrength="100" type="resistance" showiconthreshold="1" showinhealthscannerthreshold="2000" isbuff="true">
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.25">
+      <StatusEffect target="Limb">
+        <Conditional infection="lte 60" />
+        <ReduceAffliction identifier="infection" amount="1.5" />
+      </StatusEffect>
+    </Effect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="640,0,128,128" color="139,60,42,255" origin="0,0" />
+  </ointmented>
+  <Superglue name="强力胶止血" identifier="ST_Superglue" description="伤口被强力胶直接粘住了，暂时应该不会出血" healableinmedicalclinic="false" targets="human" limbspecific="true" maxstrength="10" type="resistance" showiconthreshold="1" showinhealthscannerthreshold="2000" isbuff="true">
+    <Effect minstrength="0" maxstrength="10" strengthchange="-0.1"></Effect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,4" sheetelementsize="128,128" origin="0,0" />
+  </Superglue>
+  <!--手术-->
+  <surgeryincision name="手术切口" identifier="surgeryincision" description="这个肢体上有一道整齐的切口" healableinmedicalclinic="false" targets="human" limbspecific="True" type="surgeryincision" isbuff="true" maxstrength="100" showinhealthscannerthreshold="700" showiconthreshold="1" iconcolors="84,100,100,255;84,255,255,255">
+    <Effect minstrength="0" maxstrength="100" strengthchange="15">
+      <StatusEffect target="Limb,Character">
+        <Conditional clampedbleeders="lte 0.5" />
+        <Affliction identifier="bloodloss" strength="0.1" />
+      </StatusEffect>
+      <StatusEffect target="Character" comparison="and">
+        <Conditional anaesthesia="lte 0.5" />
+        <!--Affliction identifier="traumaticshock" amount="0.5" /-->
+      </StatusEffect>
+    </Effect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="0,7" sheetelementsize="128,128" origin="0,0" />
+  </surgeryincision>
+  <clampedbleeders name="夹闭止血" identifier="clampedbleeders" description="切口的出血被止住了" healableinmedicalclinic="false" targets="human" limbspecific="true" type="clampedbleeders" isbuff="true" maxstrength="100" showinhealthscannerthreshold="700" showiconthreshold="1" iconcolors="84,100,100,255;84,211,211,255">
+    <Effect minstrength="0" maxstrength="100" strengthchange="40" />
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="1,7" sheetelementsize="128,128" origin="0,0" />
+  </clampedbleeders>
+  <retractedskin name="皮肤牵引" identifier="retractedskin" description="皮肤被牵引开了，你可以清楚看到里面的组织" healableinmedicalclinic="false" limbspecific="true" type="retractedskin" isbuff="true" maxstrength="100" showinhealthscannerthreshold="700" showiconthreshold="1" iconcolors="84,100,100,255;84,211,211,255">
+    <Effect minstrength="0" maxstrength="100" strengthchange="10">
+      <StatusEffect target="Character" comparison="and">
+        <!--Conditional table="eq 0" sym_unconsciousness="lte 0.1" /-->
+        <!--Affliction identifier="traumaticshock" amount="2" /-->
+      </StatusEffect>
+    </Effect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="2,7" sheetelementsize="128,128" origin="0,0" />
+  </retractedskin>
+  <Affliction name="激活动脉球囊" identifier="ST_balloonedaorta" description="球囊在动脉中充气，堵住了血液" healableinmedicalclinic="false" targets="human" type="gaze" isbuff="false" limbspecific="false" indicatorlimb="Torso" maxstrength="100" iconcolors="255,255,255,255;0,255,0,255">
+    <Effect minstrength="0" maxstrength="100" strengthchange="15">
+      <StatusEffect target="Character" targetlimb="LeftArm">
+        <ReduceAffliction identifier="bleeding" strength="2" />
+      </StatusEffect>
+      <StatusEffect target="Character" targetlimb="RightArm">
+        <ReduceAffliction identifier="bleeding" strength="2" />
+      </StatusEffect>
+      <StatusEffect target="Character" targetlimb="LeftLeg">
+        <ReduceAffliction identifier="bleeding" strength="2" />
+      </StatusEffect>
+      <StatusEffect target="Character" targetlimb="RightLeg">
+        <ReduceAffliction identifier="bleeding" strength="2" />
+      </StatusEffect>
+      <StatusEffect target="Character">
+        <Affliction identifier="organdamage" strength="0.5" />
+        <!--Affliction identifier="liverdamage" strength="0.5" />
+				<Affliction identifier="kidneydamage" strength="0.5" /-->
+      </StatusEffect>
+    </Effect>
+    <!--PeriodicEffect mininterval="1" maxinterval="3">
+			<StatusEffect target="Character" targetlimb="LeftArm" disabledeltatime="true">
+				<Affliction identifier="gangrene" strength="2" probability="0.5" />
+			</StatusEffect>
+			<StatusEffect target="Character" targetlimb="RightArm" disabledeltatime="true">
+				<Affliction identifier="gangrene" strength="2" probability="0.5" />
+			</StatusEffect>
+			<StatusEffect target="Character" targetlimb="LeftLeg" disabledeltatime="true">
+				<Affliction identifier="gangrene" strength="2" probability="0.5" />
+			</StatusEffect>
+			<StatusEffect target="Character" targetlimb="RightLeg" disabledeltatime="true">
+				<Affliction identifier="gangrene" strength="2" probability="0.5" />
+			</StatusEffect>
+		</PeriodicEffect-->
+    <icon texture="%ModDir%/Content/Images/items.png" sourcerect="144,291,135,62" origin="0.5,0.5" />
+  </Affliction>
+  <Affliction name="肢体驱血" identifier="ST_arteriesclamp" description="在肢体根部进行止血" healableinmedicalclinic="false" targets="human" type="gaze" isbuff="false" limbspecific="true" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
+    <Effect minstrength="0" maxstrength="100" strengthchange="-1">
+      <StatusEffect target="limb">
+        <ReduceAffliction identifier="bleeding" strength="0.5" />
+      </StatusEffect>
+    </Effect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="1,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+  <bonecut name="骨锯开" identifier="bonecut" description="骨头被整齐的锯开了" healableinmedicalclinic="true" type="gaze" isbuff="true" limbspecific="true" maxstrength="100" showinhealthscannerthreshold="700" showiconthreshold="1" iconcolors="84,100,100,255;84,211,211,255">
+    <Effect minstrength="0" maxstrength="100" strengthchange="20">
+      <StatusEffect target="Character" comparison="and">
+        <Conditional table="eq 0" sym_unconsciousness="lte 0.1" />
+        <!--Affliction identifier="traumaticshock" amount="1.5" /-->
+      </StatusEffect>
+    </Effect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="5,7" sheetelementsize="128,128" origin="0,0" />
+  </bonecut>
+  <drilledbones name="骨头钻孔" identifier="drilledbones" description="骨头被开了一个洞，已经准备好进行下一步手术了" healableinmedicalclinic="false" isbuff="true" limbspecific="true" maxstrength="100" showinhealthscannerthreshold="700" showiconthreshold="1" iconcolors="84,100,100,255;84,211,211,255">
+    <Effect minstrength="0" maxstrength="100" strengthchange="30">
+      <StatusEffect target="Character" comparison="and">
+        <Conditional table="eq 0" sym_unconsciousness="lte 0.1" />
+        <!--Affliction identifier="traumaticshock" amount="1.5" /-->
+      </StatusEffect>
+    </Effect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="4,7" sheetelementsize="128,128" origin="0,0" />
+  </drilledbones>
+  <Affliction name="医用支架" identifier="ST_medstent_aff" description="不显示" healableinmedicalclinic="false" isbuff="true" limbspecific="true" maxstrength="1" showinhealthscannerthreshold="500" showiconthreshold="500">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,7" sheetelementsize="128,128" origin="0,0" />
+    <Effect minstrength="0" maxstrength="1" />
+  </Affliction>
+  <Affliction name="缝合线口" identifier="Sutures" description="伤口被缝上了，会随时间愈合" healableinmedicalclinic="false" isbuff="true" limbspecific="true" maxstrength="100" showinhealthscannerthreshold="700" iconcolors="84,100,100,255;84,211,211,255" showiconthreshold="1">
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.2" />
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,7" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+  <!--心脏骤停60+-->
+  <alkalosis name="碱中毒" identifier="alkalosis" description="碱中毒通常是可以忽略的，在轻度到中度的情况下只需要采取最低限度的行动" healableinmedicalclinic="false" type="gaze" isbuff="false" targets="human" limbspecific="false" indicatorlimb="Torso" showiconthreshold="500" showinhealthscannerthreshold="500" maxstrength="100">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="0,128,128,128" color="0,255,0,255" origin="0,0" />
+    <Effect minstrength="0" maxstrength="100">
+      <StatusEffect target="Character">
+        <!--ReduceAffliction type="pain" amount="100" /-->
+      </StatusEffect>
+    </Effect>
+  </alkalosis>
+  <!--心率加快，心颤，混乱，头疼，虚弱 -->
+  <Acidosis name="酸中毒" identifier="acidosis" description="酸中毒通常是可以忽略的，在轻度到中度的情况下只需要采取最低限度的行动" healableinmedicalclinic="false" type="gaze" isbuff="false" targets="human" limbspecific="false" indicatorlimb="Torso" showiconthreshold="500" showinhealthscannerthreshold="500" maxstrength="100">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="0,128,128,128" color="0,255,0,255" origin="0,0" />
+    <Effect minstrength="0" maxstrength="100">
+      <StatusEffect target="Character">
+        <!--ReduceAffliction type="pain" amount="100" /-->
+      </StatusEffect>
+    </Effect>
+  </Acidosis>
+  <!--主动脉破裂-->
+  <ST_arterialcut_M name="主动脉破裂" identifier="ST_arterialcut_M" description="主动脉大破裂，正在疯狂喷血" healableinmedicalclinic="false" targets="human" type="arterialcut" limbspecific="false" indicatorlimb="Torso" showiconthreshold="200" showinhealthscannerthreshold="1" maxstrength="100">
+    <Effect minstrength="0" maxstrength="80" strengthchange="3" />
+    <Effect minstrength="80" maxstrength="100" strengthchange="3.5">
+      <StatusEffect target="Character">
+        <Conditional ST_arterialcut_M="gte 60" />
+        <Affliction identifier="ST_arterialcut_M_b" strength="10" />
+      </StatusEffect>
+    </Effect>
+    <PeriodicEffect mininterval="1" maxinterval="3">
+      <StatusEffect target="Character" targetlimb="Torso" comparison="and">
+        <ParticleEmitter particle="bloodsplash" AngleMax="360" ScaleMin="0.5" ScaleMax="2" ScaleMultiplier="1,1" ParticlesPerSecond="10" ColorMultiplier="255,255,255,255" />
+      </StatusEffect>
+      <StatusEffect target="Character" disabledeltatime="true" stackable="false" delay="1" checkconditionalalways="false">
+        <Conditional ST_balloonedaorta="lte 1" />
+        <!--Affliction identifier="internalbleeding" strength="8" /-->
+        <Affliction identifier="bloodloss" strength="4" />
+      </StatusEffect>
+    </PeriodicEffect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,3" sheetelementsize="128,128" origin="0,0" />
+  </ST_arterialcut_M>
+  <!--由主动脉破裂引起：心悸、呼吸困难、心绞痛,心衰，晕厥甚至猝死-->
+  <ST_arterialcut_M name="主动脉瓣膜回流" identifier="ST_arterialcut_M_b" description="显著主动脉瓣反流将导致舒张期血液从主动脉回流到左心室，加重左心室容量负荷" healableinmedicalclinic="false" targets="human" type="arterialcut" limbspecific="false" indicatorlimb="Torso" showiconthreshold="200" showinhealthscannerthreshold="1" maxstrength="100">
+    <Effect minstrength="0" maxstrength="80" strengthchange="5" />
+    <Effect minstrength="80" maxstrength="100" strengthchange="2">
+      <StatusEffect target="Character">
+        <Conditional ST_arterialcut_M_b="gte 85" />
+        <!--Affliction identifier="internalbleeding" strength="8" /-->
+      </StatusEffect>
+    </Effect>
+    <PeriodicEffect mininterval="1" maxinterval="3">
+      <StatusEffect target="Character" targetlimb="Torso" comparison="and">
+        <ParticleEmitter particle="bloodsplash" AngleMax="360" ScaleMin="0.5" ScaleMax="2" ScaleMultiplier="1,1" ParticlesPerSecond="10" ColorMultiplier="255,255,255,255" />
+      </StatusEffect>
+      <StatusEffect target="Character" disabledeltatime="true" stackable="false" delay="1" checkconditionalalways="false">
+        <Conditional ST_balloonedaorta="lte 1" />
+        <!--Affliction identifier="internalbleeding" strength="8" /-->
+        <Affliction identifier="bloodloss" strength="4" />
+      </StatusEffect>
+    </PeriodicEffect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,3" sheetelementsize="128,128" origin="0,0" />
+  </ST_arterialcut_M>
+  <!--副动脉破裂-->
+  <ST_arterialcut name="副动脉破裂" identifier="ST_arterialcut_F" description="副动脉破裂" healableinmedicalclinic="false" targets="human" type="arterialcut" limbspecific="true" showiconthreshold="10" showinhealthscannerthreshold="1" maxstrength="100">
+    <Effect minstrength="0" maxstrength="80" strengthchange="3" />
+    <Effect minstrength="80" maxstrength="100" strengthchange="2">
+      <StatusEffect target="Character">
+        <Conditional ST_arterialcut_M="gte 85" />
+      </StatusEffect>
+    </Effect>
+    <PeriodicEffect mininterval="1" maxinterval="3">
+      <StatusEffect target="Character" targetlimb="Torso" comparison="and">
+        <ParticleEmitter particle="bloodsplash" AngleMax="360" ScaleMin="0.5" ScaleMax="2" ScaleMultiplier="1,1" ParticlesPerSecond="10" ColorMultiplier="255,255,255,255" />
+      </StatusEffect>
+      <StatusEffect target="Character" disabledeltatime="true" stackable="false" delay="1" checkconditionalalways="false">
+        <Conditional ST_balloonedaorta="lte 1" />
+        <!--Affliction identifier="internalbleeding" strength="4" /-->
+        <Affliction identifier="bloodloss" strength="2" />
+      </StatusEffect>
+    </PeriodicEffect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,3" sheetelementsize="128,128" origin="0,0" />
+  </ST_arterialcut>
+  <!--神经断裂-->
+  <Nerverupture name="神经断裂" identifier="Nerverupture" description="神经断开了，怎么没知觉了？" healableinmedicalclinic="false" targets="human" type="arterialcut" limbspecific="false" indicatorlimb="Torso" showiconthreshold="0" showinhealthscannerthreshold="0" maxstrength="100">
+    <Effect minstrength="0" maxstrength="40" strengthchange="-0.1" />
+    <Effect minstrength="40" maxstrength="80" strengthchange="-0.05" minvitalitydecrease="0" maxvitalitydecrease="5"></Effect>
+    <Effect minstrength="80" maxstrength="100" minvitalitydecrease="0" maxvitalitydecrease="10">
+      <StatusEffect target="Character">
+        <Conditional Nerverupture="gte 85" />
+        <Affliction identifier="stun" strength="4" />
+      </StatusEffect>
+    </Effect>
+    <PeriodicEffect mininterval="1" maxinterval="3">
+      <StatusEffect target="Character" targetlimb="Torso" comparison="and">
+		  <Conditional ST_arteriesclamp="lte 1" />
+        <ParticleEmitter particle="bloodsplash" AngleMax="360" ScaleMin="0.5" ScaleMax="2" ScaleMultiplier="1,1" ParticlesPerSecond="10" ColorMultiplier="255,255,255,255" />
+      </StatusEffect>
+      <StatusEffect target="Character" disabledeltatime="true" stackable="false" delay="1" checkconditionalalways="false">
+        <Conditional ST_arteriesclamp="lte 1" />
+        <!--Affliction identifier="internalbleeding" strength="4" /-->
+        <Affliction identifier="bloodloss" strength="0.7" />
+      </StatusEffect>
+    </PeriodicEffect>
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="9,5" sheetelementsize="128,128" origin="0,0" />
+  </Nerverupture>
+  <!--呼吸停止，癫痫，失去意识-->
+  <OpioidPoisoning name="阿片中毒" identifier="opioidpoisoning" description="阿片类药物中毒的情况很少见，只发生在滥用阿片类药物的时候" type="debuff" causeofdeathdescription="Died of opiate poisoning" selfcauseofdeathdescription="You have died of opiate poisoning." limbspecific="false" indicatorlimb="Head" showiconthreshold="10" showinhealthscannerthreshold="5" karmachangeonapplied="-1" maxstrength="100" affectmachines="false" healcostmultiplier="1.25">
+    <Description textidentifier="afflictiondescription.opiateoverdose.self" target="Self" />
+    <Description textidentifier="afflictiondescription.opiateoverdose" target="OtherCharacter" />
+    <!--TODO-->
+    <Effect minstrength="0" maxstrength="50" strengthchange="-0.5" minchromaticaberration="0.0" maxchromaticaberration="1.0" minspeedmultiplier="0.8" maxspeedmultiplier="0.6"></Effect>
+    <icon texture="Content/UI/MainIconsAtlas.png" sourcerect="640,768,128,128" color="230,255,0,255" origin="0,0" />
+  </OpioidPoisoning>
+  <!--计算性buff-->
+  <Affliction name="创伤性休克" identifier="ST_traumaticshock" description="患者因为伤势晕倒了！快叫医生啊！" healableinmedicalclinic="false" targets="human" type="gaze" isbuff="false" limbspecific="false" indicatorlimb="Head" activationthreshold="0" showinhealthscannerthreshold="5" showiconthreshold="5" maxstrength="100" iconcolors="200,0,0,255;200,0,0,255">
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.1" minafflictionoverlayalphamultiplier="0.7" maxafflictionoverlayalphamultiplier="1" minresistance="1" maxresistance="100" minscreendistort="0" maxscreendistort="100" minscreenblur="0" maxscreenblur="100" minradialdistort="0" maxradialdistort="100" minchromaticaberration="0" maxchromaticaberration="100">
+      <StatusEffect target="Character">
+        <Conditional ishuman="false" />
+        <ReduceAffliction identifier="ST_traumaticshock" amount="999" />
+      </StatusEffect>
+      <StatusEffect target="Character">
+        <Conditional ishuman="true" />
+        <Affliction identifier="stun" amount="1" />
+      </StatusEffect>
+    </Effect>
+    <AfflictionOverlay texture="%ModDir%/Content/Images/die.png" />
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="6,7" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+  <LowersBlooding name="血压降低中-硝化甘油" identifier="lowersblooding_nitroglycerin" description="不显示" healableinmedicalclinic="false" isbuff="true" targets="human" limbspecific="False" showiconthreshold="500" showinhealthscannerthreshold="500" maxstrength="1">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" origin="0,0" />
+    <Effect minstrength="0" maxstrength="1" strengthchange="-0.9" minspeedmultiplier="0.8" maxspeedmultiplier="0.6">
+      <StatusEffect target="Character">
+		 <ReduceAffliction identifier="ST_bloodpressure" amount="0.1" />
+      </StatusEffect>
+    </Effect>
+  </LowersBlooding>
+  <LifeStagnant name="生命停滞" identifier="lifestagnant" description="你的生命被冻结了，在几百年后也许可以治愈你" healableinmedicalclinic="false" isbuff="true" targets="human" limbspecific="False" showiconthreshold="0" showinhealthscannerthreshold="500" maxstrength="1">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" origin="0,0" />
+    <Effect minstrength="0" maxstrength="1" strengthchange="-0.5"></Effect>
+  </LifeStagnant>
+  <Kill name="" identifier="ST_Kill" description="不显示" healableinmedicalclinic="false" isbuff="true" targets="human" limbspecific="False" showiconthreshold="500" showinhealthscannerthreshold="500" maxstrength="1">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" origin="0,0" />
+    <Effect minstrength="0" maxstrength="1" minvitalitydecrease="500" maxvitalitydecrease="800"></Effect>
+  </Kill>
+  <!-- 血液、体温、免疫力 -->
+	<!--造成重要脏器的慢性缺血，甚至导致心绞痛、心肌梗死、脑血栓形成等疾病-->
+  <bloodpressure name="血压" identifier="ST_bloodpressure" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="0" showiconthreshold="300" maxstrength="200">
+        <Effect minstrength="0" maxstrength="5" strengthchange="10" />
+		<Effect minstrength="5" maxstrength="90" strengthchange="0.5" />
+		<Effect minstrength="90" maxstrength="100" strengthchange="0" />
+		<Effect minstrength="101" maxstrength="200" strengthchange="-0.5" />
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
+  </bloodpressure>
+	<!--极易招致细菌、病毒、真菌等感染-->
+  <immunity name="免疫力" identifier="immunity" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="0" showiconthreshold="300" maxstrength="100">
+    <!--Effect minstrength="0" maxstrength="5" strengthchange="10" />
+		<Effect minstrength="5" maxstrength="90" strengthchange="0" />
+		<Effect minstrength="90" maxstrength="100" strengthchange="1" />
+		<Effect minstrength="101" maxstrength="200" strengthchange="-0.5" /-->
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
+  </immunity>
+	<!--容易导致各类心脏疾病，肝脏损伤，脑缺血、脑梗塞，肾脏危害，免疫系统的危害-->
+  <temperature name="体温" identifier="temperature" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="0" showiconthreshold="300" maxstrength="50">
+    <!--Effect minstrength="0" maxstrength="5" strengthchange="10" />
+		<Effect minstrength="5" maxstrength="90" strengthchange="0" />
+		<Effect minstrength="90" maxstrength="99" strengthchange="1" />
+		<Effect minstrength="101" maxstrength="200" strengthchange="-0.5" /-->
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
+  </temperature>
+  <BLOODTYPE name="O-" identifier="o-" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="30" showiconthreshold="300" maxstrength="1">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
+  </BLOODTYPE>
+  <BLOODTYPE name="O+" identifier="o+" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="30" showiconthreshold="300" maxstrength="1">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
+  </BLOODTYPE>
+  <BLOODTYPE name="A-" identifier="a-" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="30" showiconthreshold="300" maxstrength="1">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
+  </BLOODTYPE>
+  <BLOODTYPE name="A+" identifier="a+" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="30" showiconthreshold="300" maxstrength="1">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
+  </BLOODTYPE>
+  <BLOODTYPE name="B-" identifier="b-" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="30" showiconthreshold="300" maxstrength="1">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
+  </BLOODTYPE>
+  <BLOODTYPE name="B+" identifier="b+" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="30" showiconthreshold="300" maxstrength="1">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
+  </BLOODTYPE>
+  <BLOODTYPE name="AB-" identifier="ab-" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="30" showiconthreshold="300" maxstrength="1">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
+  </BLOODTYPE>
+  <BLOODTYPE name="AB+" identifier="ab+" description="" targets="human" limbspecific="false" indicatorlimb="Torso" activationthreshold="0" healableinmedicalclinic="false" type="" isbuff="true" showinhealthscannerthreshold="30" showiconthreshold="300" maxstrength="1">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sourcerect="128,128,128,128" color="68,157,198,255" origin="0,0" />
+  </BLOODTYPE>
+  <!--截肢-->
+  <TearingLimbs name="肢体撕裂" identifier="TearingLimbs" description="这个部位的肉体被撕裂" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" limbspecific="true" showinhealthscannerthreshold="0" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="5,9" sheetelementsize="128,128" origin="0,0" />
+  </TearingLimbs>
+  <Amputation name="" identifier="sra_amputation" description="" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="RightArm" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="0,6" sheetelementsize="128,128" origin="0,0" />
+  </Amputation>
+  <Amputation name="" identifier="sla_amputation" description="" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="LeftArm" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="1,6" sheetelementsize="128,128" origin="0,0" />
+  </Amputation>
+  <Amputation name="" identifier="srl_amputation" description="" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="RightLeg" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="2,6" sheetelementsize="128,128" origin="0,0" />
+    <Effect minstrength="0" maxstrength="100" minvitalitydecrease="0" maxvitalitydecrease="10" minscreendistort="0" maxscreendistort="0.1" minspeedmultiplier="0.2" maxspeedmultiplier="0.5"></Effect>
+  </Amputation>
+  <Amputation name="" identifier="sll_amputation" description="" healableinmedicalclinic="false" targets="human" isbuff="true" type="s_amputation" causeofdeathdescription="" selfcauseofdeathdescription="" limbspecific="false" indicatorlimb="LeftLeg" showiconthreshold="20" maxstrength="100" iconcolors="100,100,100,255;127,127,127,255">
+    <icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="3,6" sheetelementsize="128,128" origin="0,0" />
+    <Effect minstrength="0" maxstrength="100" minvitalitydecrease="0" maxvitalitydecrease="10" minscreendistort="0" maxscreendistort="0.1" minspeedmultiplier="0.2" maxspeedmultiplier="0.5"></Effect>
+  </Amputation>
+	<!--杂症-->
+	<Affliction name="皮肤苍白" identifier="ST_paleskin" description="冷白皮这不就有了吗？" healableinmedicalclinic="false" type="gaze" isbuff="false" limbspecific="false" indicatorlimb="Torso" showiconthreshold="1" showinhealthscannerthreshold="100" maxstrength="2" iconcolors="200,195,195,255;200,195,195,255">
+		<Effect minstrength="0" maxstrength="2" maxvitalitydecrease="0" minbodytint="255,255,255,0" maxbodytint="255,255,255,255" />
+		<icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" color="255,255,255,255" origin="0,0" />
+	</Affliction>
+	<Affliction name="换气过度" identifier="ST_hyperventilation" description="喘息过于频繁" healableinmedicalclinic="false" type="gaze" isbuff="false" targets="human" limbspecific="false" indicatorlimb="Torso" showiconthreshold="1" showinhealthscannerthreshold="200" maxstrength="2" iconcolors="255,90,0,255;255,90,0,255">
+		<icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="4,0" sheetelementsize="128,128" origin="0,0" />
+	</Affliction>
+	<Affliction name="心绞痛" identifier="angina" description="我重伤倒地！" healableinmedicalclinic="false" type="gaze" isbuff="false" targets="human" limbspecific="false" indicatorlimb="Torso" showiconthreshold="1" showinhealthscannerthreshold="200" maxstrength="2" iconcolors="255,90,0,255;255,90,0,255">
+		<icon texture="%ModDir%/Content/Images/AfflictionIcons.png" sheetindex="4,0" sheetelementsize="128,128" origin="0,0" />
+	</Affliction>
+	<Affliction name="头疼" identifier="ST_headache" type="pain" isbuff="false" healableinmedicalclinic="false" description="谁给我开颅了吗？" limbspecific="false" indicatorlimb="Head" showiconthreshold="1" showinhealthscannerthreshold="100" maxstrength="2" grainburst="3" iconcolors="255,90,0,255;255,90,0,255">
+		<Effect minstrength="0" maxstrength="2" minscreendistort="0.0" maxscreendistort="0.5" minradialdistort="0.0" maxradialdistort="0.5" mingrainstrength="0.0" maxgrainstrength="0.5" />
+		<icon texture="%ModDir%/Images/AfflictionIcons2.png" sheetindex="1,0" sheetelementsize="128,128" origin="0,0" />
+	</Affliction>
+	<Affliction name="头晕" identifier="ST_blurredvision" description="看不清路了..." healableinmedicalclinic="false" type="gaze" isbuff="false" limbspecific="false" indicatorlimb="Head" showiconthreshold="1" showinhealthscannerthreshold="100" maxstrength="2" iconcolors="255,90,0,255;255,90,0,255">
+		<Effect minstrength="0" maxstrength="2" minscreenblur="0.0" maxscreenblur="1.5" mingrainstrength="0.1" maxgrainstrength="1.5" minscreendistort="0.5" maxvitalitydecrease="2" />
+		<icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="3,1" sheetelementsize="128,128" origin="0,0" />
+	</Affliction>
+</Afflictions>
